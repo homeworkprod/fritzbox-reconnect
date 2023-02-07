@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 """Instruct an AVM FRITZ!Box via UPnP_ to reconnect.
 
@@ -23,12 +22,11 @@ a minute; not counting the time needed to navigate through the web interface.
 .. _XML:    http://www.w3.org/XML/
 .. _HTTP:   http://tools.ietf.org/html/rfc2616
 
-:Copyright: 2008-2015 Jochen Kupperschmidt
-:Date: 10-Jun-2015 (original release: 04-Apr-2008)
+:Copyright: 2008-2015, 2023 Jochen Kupperschmidt
+:Date: 07-Feb-2023
 :License: MIT
 """
 
-from __future__ import print_function
 import argparse
 from contextlib import closing
 import socket
@@ -46,7 +44,7 @@ def reconnect(host, port, debug=False):
 
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
         s.connect((host, port))
-        s.send(request_data)
+        s.send(request_data.encode('utf-8'))
         if debug:
             data = s.recv(1024)
             print('Received:', data)
