@@ -53,26 +53,30 @@ def reconnect(host, port, debug=False):
 def create_http_request(host, port):
     body = create_http_body()
 
-    return '\r\n'.join([
-        f'POST {URL_PATH} HTTP/1.1',
-        f'Host: {host}:{port:d}',
-        'SoapAction: urn:schemas-upnp-org:service:WANIPConnection:1#ForceTermination',
-        'Content-Type: text/xml; charset="utf-8"',
-        f'Content-Length: {len(body):d}',
-        '',
-        body,
-    ])
+    return '\r\n'.join(
+        [
+            f'POST {URL_PATH} HTTP/1.1',
+            f'Host: {host}:{port:d}',
+            'SoapAction: urn:schemas-upnp-org:service:WANIPConnection:1#ForceTermination',
+            'Content-Type: text/xml; charset="utf-8"',
+            f'Content-Length: {len(body):d}',
+            '',
+            body,
+        ]
+    )
 
 
 def create_http_body():
-    return '\r\n'.join([
-        '<?xml version="1.0" encoding="utf-8"?>',
-        '<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">',
-        '  <s:Body>',
-        '    <u:ForceTermination xmlns:u="urn:schemas-upnp-org:service:WANIPConnection:1"/>',
-        '  </s:Body>',
-        '</s:Envelope>',
-    ])
+    return '\r\n'.join(
+        [
+            '<?xml version="1.0" encoding="utf-8"?>',
+            '<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">',
+            '  <s:Body>',
+            '    <u:ForceTermination xmlns:u="urn:schemas-upnp-org:service:WANIPConnection:1"/>',
+            '  </s:Body>',
+            '</s:Envelope>',
+        ]
+    )
 
 
 def parse_args():
@@ -84,7 +88,8 @@ def parse_args():
         dest='host',
         default=DEFAULT_HOST,
         help=f'the host to send the HTTP request to [default: {DEFAULT_HOST}]',
-        metavar='HOST')
+        metavar='HOST',
+    )
 
     parser.add_argument(
         '--port',
@@ -92,14 +97,12 @@ def parse_args():
         type=int,
         default=DEFAULT_PORT,
         help=f'the port to send the HTTP request to [default: {DEFAULT_PORT:d}]',
-        metavar='PORT')
+        metavar='PORT',
+    )
 
     parser.add_argument(
-        '--debug',
-        dest='debug',
-        action='store_true',
-        default=False,
-        help='debug mode')
+        '--debug', dest='debug', action='store_true', default=False, help='debug mode'
+    )
 
     return parser.parse_args()
 
