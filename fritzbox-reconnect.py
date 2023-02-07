@@ -54,11 +54,11 @@ def create_http_request(host, port):
     body = create_http_body()
 
     return '\r\n'.join([
-        'POST {} HTTP/1.1'.format(URL_PATH),
-        'Host: {0}:{1:d}'.format(host, port),
+        f'POST {URL_PATH} HTTP/1.1',
+        f'Host: {host}:{port:d}',
         'SoapAction: urn:schemas-upnp-org:service:WANIPConnection:1#ForceTermination',
         'Content-Type: text/xml; charset="utf-8"',
-        'Content-Length: {:d}'.format(len(body)),
+        f'Content-Length: {len(body):d}',
         '',
         body,
     ])
@@ -83,8 +83,7 @@ def parse_args():
         '--host',
         dest='host',
         default=DEFAULT_HOST,
-        help='the host to send the HTTP request to [default: {}]' \
-             .format(DEFAULT_HOST),
+        help=f'the host to send the HTTP request to [default: {DEFAULT_HOST}]',
         metavar='HOST')
 
     parser.add_argument(
@@ -92,8 +91,7 @@ def parse_args():
         dest='port',
         type=int,
         default=DEFAULT_PORT,
-        help='the port to send the HTTP request to [default: {:d}]' \
-             .format(DEFAULT_PORT),
+        help=f'the port to send the HTTP request to [default: {DEFAULT_PORT:d}]',
         metavar='PORT')
 
     parser.add_argument(
